@@ -81,20 +81,6 @@ resource "aws_subnet" "private-subnet-1b" {
 
 
 
-
-resource "aws_subnet" "subnet_dc1_az2" {
-  availability_zone = "${data.aws_availability_zones.azs.names[1]}"
-  cidr_block        = "10.10.21.0/24"
-  vpc_id            = "${aws_vpc.dc1.id}"
-  tags = {
-   Name = "dc1-private-subnet"
-   }
-}
-
-
-
-
-
 # --------------  NAT Gateway 
 
 resource "aws_nat_gateway" "dc1-ngw" {
