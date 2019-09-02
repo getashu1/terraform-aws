@@ -110,7 +110,7 @@ resource "aws_nat_gateway" "dc1-ngw" {
 
 
 resource "aws_route_table" "dc1-public-route" {
-  vpc_id =  "${aws_vpc.dc2.id}"
+  vpc_id =  "${aws_vpc.dc1.id}"
   route {
       cidr_block = "0.0.0.0/0"
       gateway_id = "${aws_internet_gateway.dc1_igw.id}"
