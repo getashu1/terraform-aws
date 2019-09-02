@@ -171,7 +171,7 @@ resource "aws_route_table_assocation" "arts-p-1a" {
   route_table_id = "${aws_vpc.dc1.default_route_table_id}"
 }
 
-resource "aws_route_table_assocation" "arts-p-1a" {
+resource "aws_route_table_assocation" "arts-p-1b" {
   subnet_id = "${aws_subnet.private-subnet-1b.id}"
   route_table_id = "${aws_vpc.dc1.default_route_table_id}"
 }
