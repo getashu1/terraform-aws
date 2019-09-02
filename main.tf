@@ -13,7 +13,7 @@ resource "aws_vpc" "dc1" {
 
 #--  Create Internet Gateway
 resource "aws_internet_gateway" "dc1_igw" {
- vpc_id = "${vpc_id.dc1}"
+ vpc_id = "${aws_vpc.dc1.id}"
  tags = {
     Name = "dc1-igw"
  }
@@ -94,27 +94,6 @@ resource "aws_subnet" "subnet_dc1_az2" {
 
 
 
-resource "aws_subnet" "subnet_dc2_az1" {
-  availability_zone = "${data.aws_availability_zones.azs.names[0]}"
-  cidr_block        = "172.16.20.0/24"
-  vpc_id            = "${aws_vpc.dc2.id}"
-  map_public_ip_on_launch = "true"
-  tags = {
-   Name = "dc2-public-subnet"
-   }
-}
-
-resource "aws_subnet" "subnet_dc2_az2" {
-  availability_zone = "${data.aws_availability_zones.azs.names[1]}"
-  cidr_block        = "172.16.21.0/24"
-  vpc_id            = "${aws_vpc.dc2.id}"
-  tags = {
-   Name = "dc2-private-subnet"
-   }
-}
-
-
-
 
 # --------------  NAT Gateway 
 
@@ -154,24 +133,24 @@ resource "aws_default_route_table" "dc1-default-route" {
 
 #--- Subnet Association -----
 
-resource "aws_route_table_assocation" "arts1a" {
+resource "aws_route_table_association" "arts1a" {
   subnet_id = "${aws_subnet.public-subnet-1a.id}"
   route_table_id = "${aws_route_table.dc1-public-route.id}"
 }
 
 
-resource "aws_route_table_assocation" "arts1b" {
+resource "aws_route_table_association" "arts1b" {
   subnet_id = "${aws_subnet.public-subnet-1b.id}"
   route_table_id = "${aws_route_table.dc1-public-route.id}"
 }
 
 
-resource "aws_route_table_assocation" "arts-p-1a" {
+resource "aws_route_table_association" "arts-p-1a" {
   subnet_id = "${aws_subnet.private-subnet-1a.id}"
   route_table_id = "${aws_vpc.dc1.default_route_table_id}"
 }
 
-resource "aws_route_table_assocation" "arts-p-1b" {
+resource "aws_route_table_association" "arts-p-1b" {
   subnet_id = "${aws_subnet.private-subnet-1b.id}"
   route_table_id = "${aws_vpc.dc1.default_route_table_id}"
 }
